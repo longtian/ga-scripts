@@ -1,0 +1,31 @@
+{
+  "name": "ga-scripts",
+  "version": "0.0.0",
+  "description": "Import google analytics reports to mongo",
+  "main": "import.js",
+  "scripts": {
+    "docs": "docco import.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyvernnot/ga-scripts.git"
+  },
+  "keywords": [
+    "google",
+    "analytics"
+  ],
+  "author": "wyvernnot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wyvernnot/ga-scripts/issues"
+  },
+  "homepage": "https://github.com/wyvernnot/ga-scripts#readme",
+  "dependencies": {
+    "googleapis": "^13.0.0",
+    "moment": "^2.15.0",
+    "mongodb": "^2.2.10"
+  },
+  "devDependencies": {
+    "docco": "^0.7.0"
+  }
+}

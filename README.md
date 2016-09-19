@@ -1,2 +1,4 @@
 # ga-scripts
-Import google analytics report data into mongodb
+Import google analytics report data into mongodb for further analysis
+
+## [Documents](https://wyvernnot.github.io/ga-scripts/import.html)

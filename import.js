@@ -75,37 +75,38 @@ analytics.management.profiles.list({
     // ### Step 2: fetch each profile detail
 
 
-    res.items.forEach(item => {
-
-      analytics.data.ga.get({
-        'ids': `ga:${item.id}`,
-        'start-date': DATE,
-        'end-date': DATE,
-        'metrics': METRICS,
-        'fields': 'totalsForAllResults'
-      }, (err, result)=> {
-        assert(!err, err);
-
-        // ### Step 3: Prepare data to insert
-        const dataToInsert = Object.assign(ensureNumberValues(result.totalsForAllResults), item, {
-          date: new Date(DATE),
-          _id: `${DATE}-${item.id}`
-        });
-
-        // ### Step 4: InsertOrUpdate MongoDB
-        collection.save(dataToInsert, (err, result)=> {
+    res.items.forEach((item, i) => {
+      setTimeout(()=> {
+        analytics.data.ga.get({
+          'ids': `ga:${item.id}`,
+          'start-date': DATE,
+          'end-date': DATE,
+          'metrics': METRICS,
+          'fields': 'totalsForAllResults'
+        }, (err, result)=> {
           assert(!err, err);
 
-          console.log(`[success] ${Math.round(100 * (++successCount / res.items.length))}% #profile-${item.id}-${item.name}`);
+          // ### Step 3: Prepare data to insert
+          const dataToInsert = Object.assign(ensureNumberValues(result.totalsForAllResults), item, {
+            date: new Date(DATE),
+            _id: `${DATE}-${item.id}`
+          });
 
-          if (successCount == res.items.length) {
-            console.log('[success] Done')
-            db.close();
-            process.exit(0);
-          }
-        });
-      })
-    });
+          // ### Step 4: InsertOrUpdate MongoDB
+          collection.save(dataToInsert, (err, result)=> {
+            assert(!err, err);
+
+            console.log(`[success] ${Math.round(100 * (++successCount / res.items.length))}% #profile-${item.id}-${item.name}`);
+
+            if (successCount == res.items.length) {
+              console.log('[success] Done')
+              db.close();
+              process.exit(0);
+            }
+          });
+        })
+      }, i * 1000);
+    })
   });
 });
 
